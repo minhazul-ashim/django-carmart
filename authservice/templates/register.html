@@ -1,7 +1,8 @@
 {% extends 'base.html' %} {% block content %} {%load crispy_forms_tags %}
-<div class="container-fluid w-50 mx-auto border rounded shadow">
+<div class="container-fluid w-50 mx-auto border rounded shadow p-5 mt-5">
   <h5>Register User</h5>
   <form action="" method="POST" novalidate>
+    {% csrf_token %}
     <!-- {% csrf_token %} {% for fm in form %}
     <div class="">{{fm.label_tag}} {{fm}} {{fm.errors | striptags}}</div>
     {% endfor %} -->

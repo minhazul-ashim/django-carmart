@@ -1,42 +1,47 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, LoginForm;
-from django.contrib.auth import login, authenticate, logout;
+from django.contrib.auth import logout;
+from django.views.generic import CreateView, TemplateView;
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.contrib import messages
 
-# Create your views here.
-def register(request) :
-    if request.method == 'POST' :
-        form = RegisterForm(request.POST);
-        if(form.is_valid()) :
-            form.save();
-            print(form.cleaned_data)
-    else :
-        form = RegisterForm();
-    return render(request, 'register.html', {'form': form});
-
-def userLogin(request) :
-    form = LoginForm
-    if request.method == 'POST' :
-        form = LoginForm(request = request, data = request.POST);
-        if(form.is_valid()) :
-            name = form.cleaned_data['username'];
-            password = form.cleaned_data['password'];
-            user = authenticate(username=name, password=password);
-            if user is not None :
-                login(request, user);
-                return redirect('profilePage');
-    else :
-        form = LoginForm();
-        return render(request, 'login.html', {'form' : form});
-    return render(request, 'login.html', {'form' : form});
+class RegisterView(CreateView) :
+    form_class = RegisterForm;
+    success_url = reverse_lazy("loginPage")
+    template_name = 'register.html'
 
 
-def profile(request) :
-    if request.user.is_authenticated :
-        return render(request, 'profile.html', {'user' : request.user});
-    else :
-        return redirect('loginPage')
+class LoginPageView(LoginView):
+    template_name = 'login.html'
+    form_class = LoginForm;
 
+    def get_success_url(self):
+        return reverse_lazy("homePage")
 
+    def form_valid(self, form):
+        messages.success(self.request, 'Log in successful')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.success(self.request, 'Login credentials incorrect.')
+        return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs) -> dict[str, any]:
+        context = super().get_context_data(**kwargs)
+        context["type"] = 'Login'
+        return context
+    
+class ProfileView(TemplateView):
+    template_name = 'profile.html'
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            return super().get(request)
+        else:
+            return reverse_lazy('loginPage')
+    
 def userlogout(request) :
     logout(request);
     return redirect('loginPage')
