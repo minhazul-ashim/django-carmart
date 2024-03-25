@@ -1,5 +1,19 @@
-{% extends 'base.html' %} {% block content %}
-<div class="container-fluid">
-  <h2>Homepage</h2>
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container-fluid my-5">
+  <div class="d-flex">
+    <div class="mx-5">
+      <h2>Hello, Welcome to CarMart.</h2>
+      <h3>Your everyday companion for cars</h3>
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat
+        consequatur maiores ex molestias amet facilis nihil animi velit at
+        alias. Id in recusandae nam, quas similique enim numquam eum. Accusamus?
+      </p>
+    </div>
+    <div class="w-100 h-100" style="height: 300px; width: 450px">
+      <img src="{% static 'store.jpg' %}" class="img-fluid w-100 h-100" alt="" />
+    </div>
+  </div>
+  
 </div>
 {% endblock %}

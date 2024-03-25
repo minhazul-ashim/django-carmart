@@ -3,9 +3,6 @@
   <h5>Login User</h5>
   <form action="" method="POST" novalidate>
     {% csrf_token %}
-    <!-- {% csrf_token %} {% for fm in form %}
-    <div class="">{{fm.label_tag}} {{fm}} {{fm.errors | striptags}}</div>
-    {% endfor %} -->
     {{form | crispy}}
     <button class="btn btn-success" type="submit">Login</button>
   </form>
