@@ -5,6 +5,7 @@ from django.views.generic import CreateView, TemplateView, UpdateView;
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from order.models import OrderModel;
 
 class RegisterView(CreateView) :
     form_class = RegisterForm;
@@ -34,6 +35,7 @@ class LoginPageView(LoginView):
         
 
 def ProfileView(request) :
+    orders = OrderModel.objects.filter(user=request.user)
     if request.method == 'POST' :
         profile_form = ChangeUserForm(request.POST, instance=request.user);
         if profile_form.is_valid() :
@@ -42,7 +44,7 @@ def ProfileView(request) :
             return redirect('profilePage');
     else :
         profile_form = ChangeUserForm(instance=request.user);
-    return render(request, 'profile.html', {'form' : profile_form})
+    return render(request, 'profile.html', {'form' : profile_form, 'orders': orders})
 
     
 def userlogout(request) :

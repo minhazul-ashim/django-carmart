@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from . import models;
 from comment.forms import CommentForm;
 from comment.models import CommentModel;
+from order.models import OrderModel
 
 # Create your views here.
 class CarDetailView(DetailView) :
@@ -26,4 +27,7 @@ class CarStockUpdateView(DetailView):
         car = self.get_object()
         car.stock -= 1
         car.save()
+
+        user = request.user
+        order = OrderModel.objects.create(user=user, car=car)
         return redirect('detailPage', pk=car.pk)
