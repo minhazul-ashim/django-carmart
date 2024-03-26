@@ -1,7 +1,7 @@
-from django.shortcuts import redirect
-from .forms import RegisterForm, LoginForm;
+from django.shortcuts import redirect, render;
+from .forms import RegisterForm, LoginForm, ChangeUserForm;
 from django.contrib.auth import logout;
-from django.views.generic import CreateView, TemplateView;
+from django.views.generic import CreateView, TemplateView, UpdateView;
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -31,15 +31,19 @@ class LoginPageView(LoginView):
         context = super().get_context_data(**kwargs)
         context["type"] = 'Login'
         return context
-    
-class ProfileView(TemplateView):
-    template_name = 'profile.html'
+        
 
-    def get(self, request):
-        if request.user.is_authenticated:
-            return super().get(request)
-        else:
-            return reverse_lazy('loginPage')
+def ProfileView(request) :
+    if request.method == 'POST' :
+        profile_form = ChangeUserForm(request.POST, instance=request.user);
+        if profile_form.is_valid() :
+            profile_form.save();
+            messages.success(request, 'Profile Updated Successfully');
+            return redirect('profilePage');
+    else :
+        profile_form = ChangeUserForm(instance=request.user);
+    return render(request, 'profile.html', {'form' : profile_form})
+
     
 def userlogout(request) :
     logout(request);

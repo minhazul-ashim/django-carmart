@@ -1,9 +1,15 @@
-{% extends 'base.html' %} {% block content %} {% if user.is_authenticated %}
-<div class="container-fluid">
-  <h2 class="text-center text-success">Logged in Sucessfully</h2>
+{% extends 'base.html' %} 
+{% load crispy_forms_tags %} 
+{% block content %} 
+{% if user.is_authenticated %}
+<div class="container-fluid my-5">
+  <form action="" method="POST" class="w-50 shadow rounded border mx-auto p-5">
+    {% csrf_token %} {{form | crispy}}
+    <button class="btn btn-outline-info" type="submit">Submit</button>
+  </form>
 </div>
 {% else %}
 <div class="container-fluid">
   <h2 class="text-center text-danger">Logged Out Successfully</h2>
 </div>
-{% endif %} {%endblock%}
+{% endif %} {% endblock %}
