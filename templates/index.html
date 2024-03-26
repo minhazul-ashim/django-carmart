@@ -39,7 +39,7 @@
             <h5 class="card-title">{{car.name}}</h5>
             <p class="card-text">{{car.description|truncatewords:10}}</p>
             <p class="card-text text-success">{{car.price}} USD</p>
-            <a href="#" class="btn btn-primary">View Details</a>
+            <a href="{% url 'detailPage' car.id %}" class="btn btn-primary">View Details</a>
           </div>
         </div>
       {% endfor %}

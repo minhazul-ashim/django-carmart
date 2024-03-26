@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid my-5">
+    <div class="row">
+    <div class="col-5">
+      <img src="{{car.image.url}}" class="img-fluid object-fit-contain" alt="" />
+    </div>
+    
+    <div class="col-7">
+      <h2>Model : {{car.name}}</h2>
+      <p>
+        {{car.description}}
+      </p>
+      <h2>Price : {{car.price}} USD</h2>
+      <h2>Stock left : {{ car.stock }}</h2>
+      <h2>Manufracture Brand : {{car.brand.name}}</h2>
+      {% if user.is_authenticated %}
+      <form action="{% url 'update_stock' car.id %}" method="POST" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-info">Buy now</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

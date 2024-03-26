@@ -19,4 +19,6 @@ from django.urls import path, include;
 from . import views;
 
 urlpatterns = [
+    path('details/<int:pk>/', views.CarDetailView.as_view(), name='detailPage'),
+    path('car/update_stock/<int:pk>/', views.CarStockUpdateView.as_view(), name='update_stock'),
 ]
