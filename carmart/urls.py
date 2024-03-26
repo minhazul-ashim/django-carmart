@@ -23,6 +23,7 @@ from django.conf.urls.static import static;
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='homePage'),
+    path('brand/<int:id>/', views.index, name='brandWise'),
     path('brand/', include('brand.urls')),
     path('auth/', include('authservice.urls')),
     path('car/', include('car.urls'))

@@ -10,5 +10,5 @@ class CarModel(models.Model) :
     stock = models.IntegerField();
     image = models.ImageField(upload_to='uploads/media/', blank=True, null=True);
 
-    def __str__(self):
-        return self.name;
+    # def __str__(self):
+    #     return self.name;

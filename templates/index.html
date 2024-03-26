@@ -20,15 +20,18 @@
     <h4 class="my-3">Car Brands</h4>
     <div class="d-flex justify-content-around flex-wrap">
       {% for brand in brands %}
-        <div class="px-5 py-2 border rounded my-2">
-          <h6>{{brand.name}}</h6>
+        <div class="form-check">  
+          <input type="radio" class="form-check-input" name="brand" id="{{brand.id}}">
+          <label class="form-check-label" for="{{brand.id}}" >
+              <a href="{% url 'brandWise' brand.id %}">{{brand.name}}</a>
+          </label>
         </div>
       {% endfor %}
     </div>
     <div class="border px-5 py-3 d-inline-block rounded my-5">
-      <h6>Total Cars Found : {{total}}</h6>
+      <h6>Total Cars Found : {{ total }}</h6>
     </div>
-  </div>
+</div>
 
   <div class="mt-5">
     <div class="d-flex justify-content-around flex-wrap">
