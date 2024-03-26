@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container-fluid my-5">
   <div class="d-flex">
-    <div class="mx-5">
+    <div class="mr-5">
       <h2>Hello, Welcome to CarMart.</h2>
       <h3>Your everyday companion for cars</h3>
       <p>
@@ -15,5 +15,35 @@
     </div>
   </div>
   
+
+  <div class="mt-5">
+    <h4 class="my-3">Car Brands</h4>
+    <div class="d-flex justify-content-around flex-wrap">
+      {% for brand in brands %}
+        <div class="px-5 py-2 border rounded my-2">
+          <h6>{{brand.name}}</h6>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="border px-5 py-3 d-inline-block rounded my-5">
+      <h6>Total Cars Found : {{total}}</h6>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <div class="d-flex justify-content-around flex-wrap">
+      {% for car in cars %}
+        <div class="card mx-2 my-2" style="width: 18rem;">
+          <img src="{{car.image.url}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{car.name}}</h5>
+            <p class="card-text">{{car.description|truncatewords:10}}</p>
+            <p class="card-text text-success">{{car.price}} USD</p>
+            <a href="#" class="btn btn-primary">View Details</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 </div>
 {% endblock %}
